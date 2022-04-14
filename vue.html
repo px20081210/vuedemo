@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>{{ message }}</h1>
+</div>
+
+<script>
+    let vm = new Vue({
+    data: {
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4,
+        e: 5,
+        f: {
+            g: 6
+        }
+    },
+    methods: {
+        someMethod: function (newVal, oldVal) {
+            console.log("new: %s, old: %s someMethod...", newVal, oldVal)
+        }
+    },
+    watch: {
+        // 值可以是方法
+        a: function (newVal, oldVal) {
+            console.log("new: %s, old: %s method...", newVal, oldVal)
+        },
+        // 值可以是方法名
+        b: "someMethod",
+        // 该回调会在任何被侦听的对象的 property 改变时被调用，不论其被嵌套多深
+        c: {
+            deep: true,
+            handler: function (newVal, oldVal) {
+                console.log("new: %s, old: %s deep...", newVal, oldVal)
+            }
+        },
+        // 该回调将会在侦听开始之后被立即调用
+        d: {
+            immediate: true,
+            handler: function (newVal, oldVal) {
+                console.log("new: %s, old: %s immediate...", newVal, oldVal)
+            }
+        },
+        // 你可以传入回调数组，它们会被逐一调用
+        e: [
+            function handle1(newVal, oldVal) {
+                console.log("new: %s, old: %s handle1...", newVal, oldVal)
+            },
+            function handle2(newVal, oldVal) {
+                console.log("new: %s, old: %s handle2...", newVal, oldVal)
+            },
+            function handle3(newVal, oldVal) {
+                console.log("new: %s, old: %s handle3...", newVal, oldVal)
+            }
+        ],
+        // 你可以观察一个对象的某一个属性值
+        'f.g': function (newVal, oldVal) {
+            console.log("new: %s, old: %s f.g...", newVal, oldVal)
+        }
+    }
+})
+
+//vm.b = 12
+// vm.b = 22
+// vm.c = 33
+// vm.d = 44
+// vm.e = 55
+// vm.f.g = 66
+
+
+</script>
+</body>
+</html>
